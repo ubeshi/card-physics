@@ -1,0 +1,13 @@
+:host {
+  position: absolute;
+}
+
+.card {
+  width: 100px;
+  height: 158px;
+  border: 3px solid black;
+  border-radius: 10px;
+
+  cursor: grab;
+  transition: transform 0.05s;
+}
