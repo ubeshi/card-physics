@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent } from 'ng-mocks';
 import { AppComponent } from './app.component';
+import { CardContainerComponent } from './card-container/card-container.component'
+import { CardComponent } from './card/card.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -9,7 +12,9 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockComponent(CardContainerComponent),
+        MockComponent(CardComponent)
       ],
     }).compileComponents();
   });

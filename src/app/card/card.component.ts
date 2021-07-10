@@ -26,7 +26,7 @@ export class CardComponent {
     const boundingRectangle = (this.elementRef.nativeElement as HTMLElement).getBoundingClientRect();
 
     const cardRotation = getCard3dRotation(boundingRectangle, event);
-    this.cardRotationStyle = `rotate3d(${cardRotation.x}, ${cardRotation.y}, ${cardRotation.z}, ${cardRotation.angle})`;
+    this.cardRotationStyle = `rotate3d(${cardRotation.x}, ${cardRotation.y}, ${cardRotation.z}, ${cardRotation.turns}turn)`;
     this.transitionSpeed = '0s';
   }
 
