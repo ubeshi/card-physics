@@ -1,3 +1,5 @@
+import { MAX_DRAG_VELOCITY } from "./card.component";
+
 export interface Rotate3d extends Vector3d {
   turns: number;
 }
@@ -20,13 +22,35 @@ export interface CursorPosition {
 
 export const MAX_TURNS = 0.1;
 
-export function getCard3dRotation(boundingRectangle: { top: number, left: number, width: number, height: number }, cursorPosition: CursorPosition): Rotate3d {
+export function isCursorInBoundingRectangle(boundingRectangle: { left: number, right: number, top: number, bottom: number }, cursorPosition: CursorPosition): boolean {
+  const { pageX, pageY } = cursorPosition;
+  const { left, right, top, bottom } = boundingRectangle;
+  return (
+    pageX > left &&
+    pageX < right &&
+    pageY > top &&
+    pageY < bottom
+  );
+}
+
+export function getCardIdle3dRotation(boundingRectangle: { top: number, left: number, width: number, height: number }, cursorPosition: CursorPosition): Rotate3d {
   const relativeCursorPosition = getRelativeCursorPosition(boundingRectangle, cursorPosition);
   const distanceFromCenter = getDistanceFromCenter(boundingRectangle, relativeCursorPosition);
   const maxDistanceFromCenter = getDistanceFromCenter(boundingRectangle, { x: 0, y: 0 });
 
   const axis = getCardRotationAxis(distanceFromCenter);
   const turns = MAX_TURNS * getCardRotationTurnsRatio(distanceFromCenter, maxDistanceFromCenter);
+  return {
+    ...axis,
+    turns,
+  };
+}
+
+export function getCardDragging3dRotation(cursorMovement: { movementX: number, movementY: number }): Rotate3d {
+  const { movementX, movementY } = cursorMovement;
+
+  const axis = getCardRotationAxis({ x: movementX, y: movementY });
+  const turns = MAX_TURNS * getCardRotationTurnsRatio({ x: movementX, y: movementY }, { x: MAX_DRAG_VELOCITY, y: MAX_DRAG_VELOCITY });
   return {
     ...axis,
     turns,
@@ -49,7 +73,7 @@ export function getCardRotationAxis(distanceFromCenter: Vector2d): Vector3d {
   const angleFromCenter = Math.atan2(distanceFromCenter.y, distanceFromCenter.x);
 
   // Add a quarter circle to get the perpendicular angle
-  let axisAngle = angleFromCenter + Math.PI / 2;
+  const axisAngle = angleFromCenter + Math.PI / 2;
 
   // Compute the axis vector ratio
   const axisVectorRatio = Math.tan(axisAngle);
