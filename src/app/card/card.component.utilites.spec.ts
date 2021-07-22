@@ -1,5 +1,5 @@
 import {
-  getCard3dRotation,
+  getCardIdle3dRotation,
   getCardRotationAxis,
   getCardRotationTurnsRatio,
   getDistanceFromCenter,
@@ -9,7 +9,7 @@ import {
 } from "./card.component.utilities";
 
 describe('CardComponent utilities', () => {
-  describe('getCard3dRotation()', () => {
+  describe('getCardIdle3dRotation()', () => {
     let top: number;
     let left: number;
     let height: number;
@@ -30,7 +30,7 @@ describe('CardComponent utilities', () => {
         const pageY = top;
         const cursorPosition = { pageX, pageY };
 
-        const { x, y, z } = getCard3dRotation(boundingRectangle, cursorPosition);
+        const { x, y, z } = getCardIdle3dRotation(boundingRectangle, cursorPosition);
 
         expect(x).toBe(1);
         expect(y).toBeCloseTo(0);
@@ -42,7 +42,7 @@ describe('CardComponent utilities', () => {
         const pageY = top + height;
         const cursorPosition = { pageX, pageY };
 
-        const { x, y, z } = getCard3dRotation(boundingRectangle, cursorPosition);
+        const { x, y, z } = getCardIdle3dRotation(boundingRectangle, cursorPosition);
 
         expect(x).toBe(-1);
         expect(y).toBeCloseTo(0);
@@ -54,7 +54,7 @@ describe('CardComponent utilities', () => {
         const pageY = top + height / 2;
         const cursorPosition = { pageX, pageY };
 
-        const { x, y, z } = getCard3dRotation(boundingRectangle, cursorPosition);
+        const { x, y, z } = getCardIdle3dRotation(boundingRectangle, cursorPosition);
 
         expect(Math.abs(x)).toBe(1);
         expect(y).toBeGreaterThan(10000000);
@@ -66,7 +66,7 @@ describe('CardComponent utilities', () => {
         const pageY = top + height / 2;
         const cursorPosition = { pageX, pageY };
 
-        const { x, y, z } = getCard3dRotation(boundingRectangle, cursorPosition);
+        const { x, y, z } = getCardIdle3dRotation(boundingRectangle, cursorPosition);
 
         expect(Math.abs(x)).toBe(1);
         expect(y).toBeLessThan(-10000000);
@@ -93,7 +93,7 @@ describe('CardComponent utilities', () => {
         const pageY = top + height / 2;
         const cursorPosition = { pageX, pageY };
   
-        const { turns } = getCard3dRotation(boundingRectangle, cursorPosition);
+        const { turns } = getCardIdle3dRotation(boundingRectangle, cursorPosition);
   
         expect(turns).toBeCloseTo(0);
       });
@@ -107,7 +107,7 @@ describe('CardComponent utilities', () => {
         const cursorPosition = { pageX, pageY };
         const expectedTurns = MAX_TURNS * ratio;
 
-        const { turns } = getCard3dRotation(boundingRectangle, cursorPosition);
+        const { turns } = getCardIdle3dRotation(boundingRectangle, cursorPosition);
         expect(turns).toBeCloseTo(expectedTurns, 10);
       });
 
@@ -120,7 +120,7 @@ describe('CardComponent utilities', () => {
         const cursorPosition = { pageX, pageY };
         const expectedTurns = MAX_TURNS * ratio;
 
-        const { turns } = getCard3dRotation(boundingRectangle, cursorPosition);
+        const { turns } = getCardIdle3dRotation(boundingRectangle, cursorPosition);
         expect(turns).toBeCloseTo(expectedTurns, 10);
       });
     });
